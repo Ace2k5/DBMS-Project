@@ -8,7 +8,7 @@ class Engineer():
     def create_table_engineer(self):
         '''
         This functions aims to create the engineering table. This table will function as a foreign key for the Projects table
-        
+        To clarify hiring date, it is how long the engineer has been in OUR company.
         '''
         try:
             self.cursor.execute(
@@ -17,9 +17,9 @@ class Engineer():
                     Engineer_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     Name TEXT,
                     Engineering_Field TEXT,
-                    Origin_Company TEXT,
-                    Hiring_Date TEXT,
-                    Is_Complete INTEGER
+                    Phone_Number TEXT,
+                    Email TEXT,
+                    Hiring_Date TEXT
                 )
                 """
             )
@@ -27,18 +27,24 @@ class Engineer():
         except Exception as e:
             print(f"Failure in creating an Engineering table, resulted as {e}")
             
-    def insert_values_into_engineer(self, name: str, field: str, company: str, hire_date: str, is_done: int):
+    def insert_values_into_engineer(self, name: str, field: str, phone: str, email: str, hire_date: str):
         '''
         This function will aim to insert values inside of the Engineering table while grabbing the last row inserted inside of the
         table.
+        
+            Args:
+                name = str, name of the company
+                field = str, field of engineering
+                phone = str, the phone number of the engineer
+                email = str, the email of the engineer
+                hire_date = str, when the engineer was hired into the company
         '''
         try:
             self.cursor.execute(
                 """
-                INSERT INTO Engineer(Name, Engineering_Field, Origin_Company, Hiring_Date, Is_Complete)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO Engineer(Name, Engineering_Field, Phone_Number, Email, Hiring_Date) VALUES (?, ?, ?, ?, ?)
                 """,
-                (name, field, company, hire_date, is_done)
+                (name, field, phone, email, hire_date)
             )
             self.db.commit()
             
@@ -47,9 +53,16 @@ class Engineer():
         except Exception as e:
             print(f"Failed to insert values inside of the Engineering table, problem appeared as {e}")
             
-    def update_engineer_values(self, engineer_id: int, name: str=None, field: str=None, company: str=None, hire_date: str=None, is_done: int=None):
+    def update_engineer_values(self, engineer_id: int, name: str=None, field: str=None, phone: str=None, email: str=None, hire_date: str=None):
         '''
         This function will update values based on how many parameters are given.
+            Args:
+                engineer_id = int, the id of the engineer
+                name = str, the name of the engineer
+                field = str, what field the engineer studied
+                phone = str, phone number of the engineer
+                email = str, email of the engineer
+                hire_date = str, when the engineer was hired to the company
         '''
         try:
             updates = []
@@ -61,15 +74,15 @@ class Engineer():
             if field is not None:
                 updates.append("Engineering_Field = ?")
                 params.append(field)
-            if company is not None:
-                updates.append("Origin_Company = ?")
-                params.append(company)
+            if phone is not None:
+                updates.append("Phone_Number = ?")
+                params.append(phone)
+            if email is not None:
+                updates.append("Email = ?")
+                params.append(email)
             if hire_date is not None:
                 updates.append("Hiring_Date = ?")
-                params.append(hire_date)    
-            if is_done is not None:
-                updates.append("Is_Complete = ?")
-                params.append(is_done)
+                params.append(hire_date)
             
             if not updates:
                 print("There was nothing to update, no given parameters. Returning...")
@@ -77,10 +90,18 @@ class Engineer():
             
             params.append(engineer_id)
             
-            executables = f"UPDATE Engineer SET {', '.join(updates)} WHERE Engineer_ID = ?"
-            self.cursor.execute(executables, params)
+            query = f"UPDATE Engineer SET {', '.join(updates)} WHERE Engineer_ID = ?"
+            self.cursor.execute(query, params)
             self.db.commit()
             print(f"Successfully updated Engineer ID: {engineer_id}")
             
         except Exception as e:
             print(f"There was a problem in updating the Engineering table, problem resulted as {e}")
+    
+    def delete_id(self, engineer_id: int):
+        '''
+        This function aims to remove an engineer row based on the id
+        '''
+        self.cursor.execute(
+            "DELETE FROM Company WHERE Engineer_ID = ?", (engineer_id,) 
+        )
