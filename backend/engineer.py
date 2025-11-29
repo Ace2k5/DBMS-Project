@@ -1,3 +1,9 @@
+'''
+
+The purpose of this file is to input the engineer that was assigned to the project.
+
+'''
+
 import sqlite3
 
 class Engineer():
@@ -27,7 +33,7 @@ class Engineer():
         except Exception as e:
             print(f"Failure in creating an Engineering table, resulted as {e}")
             
-    def insert_values_into_engineer(self, name: str, field: str, phone: str, email: str, hire_date: str):
+    def insert_engineer_value(self, name: str, field: str, phone: str, email: str, hire_date: str):
         '''
         This function will aim to insert values inside of the Engineering table while grabbing the last row inserted inside of the
         table.
@@ -53,7 +59,7 @@ class Engineer():
         except Exception as e:
             print(f"Failed to insert values inside of the Engineering table, problem appeared as {e}")
             
-    def update_engineer_values(self, engineer_id: int, name: str=None, field: str=None, phone: str=None, email: str=None, hire_date: str=None):
+    def update_engineer_value(self, engineer_id: int, name: str=None, field: str=None, phone: str=None, email: str=None, hire_date: str=None):
         '''
         This function will update values based on how many parameters are given.
             Args:

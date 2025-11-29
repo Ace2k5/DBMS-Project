@@ -1,6 +1,12 @@
+'''
+
+The purpose of this file is to input the architect that was assigned to the project.
+
+'''
+
 import sqlite3
 
-class architect():
+class Architect():
     def __init__(self, db: sqlite3.Connection):
         self.db = db
         self.cursor = self.db.cursor()
@@ -26,7 +32,7 @@ class architect():
         except Exception as e:
             print(f"Failure in creating an architect table, resulted as {e}")
             
-    def insert_values_into_architect(self, name: str, phone: str, email: str, hire_date: str):
+    def insert_architect_value(self, name: str, phone: str, email: str, hire_date: str):
         '''
         This function will aim to insert values inside of the architect table while grabbing the last row inserted inside of the
         table.

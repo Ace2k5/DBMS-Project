@@ -1,3 +1,9 @@
+'''
+
+The purpose of this file is to input the company that requested the project.
+
+'''
+
 import sqlite3
 
 class Company():
@@ -27,7 +33,7 @@ class Company():
         except Exception as e:
             print(f"Failure in creating an Engineering table, resulted as {e}")
             
-    def insert_value_into_company(self, name: str, phone_num: str, email: str, address: str, date: str):
+    def insert_company_value(self, name: str, phone_num: str, email: str, address: str, date: str):
         '''
         This function will aim to insert values inside of the Company table while grabbing the last row inserted inside of the
         table.
