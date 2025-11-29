@@ -30,7 +30,7 @@ class SQL():
         except Exception as e:
             print(f"Failed in getting the values from Company table, occured as {e}")
             
-    def show_company_table(self):
+    def show_employer_table(self):
         try:
             self.cursor.execute(
                 """

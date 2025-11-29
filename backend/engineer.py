@@ -32,6 +32,7 @@ class Engineer():
             self.db.commit()
         except Exception as e:
             print(f"Failure in creating an Engineering table, resulted as {e}")
+            raise
             
     def insert_engineer_value(self, name: str, field: str, phone: str, email: str, hire_date: str):
         '''
@@ -58,6 +59,7 @@ class Engineer():
             
         except Exception as e:
             print(f"Failed to insert values inside of the Engineering table, problem appeared as {e}")
+            raise
             
     def update_engineer_value(self, engineer_id: int, name: str=None, field: str=None, phone: str=None, email: str=None, hire_date: str=None):
         '''
@@ -103,11 +105,18 @@ class Engineer():
             
         except Exception as e:
             print(f"There was a problem in updating the Engineering table, problem resulted as {e}")
+            raise
     
     def delete_id(self, engineer_id: int):
         '''
         This function aims to remove an engineer row based on the id
         '''
-        self.cursor.execute(
-            "DELETE FROM Engineer WHERE Engineer_ID = ?", (engineer_id,) 
-        )
+        try:
+            self.cursor.execute(
+                "DELETE FROM Engineer WHERE Engineer_ID = ?", (engineer_id,) 
+            )
+            self.db.commit()
+        except Exception as e:
+            print(f"Could not delete engineer row, occured as {e}")
+            raise
+        

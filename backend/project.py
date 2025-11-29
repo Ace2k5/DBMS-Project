@@ -41,6 +41,7 @@ class Project():
             self.db.commit()
         except Exception as e:
             print(f"Could not create the projects table, occured as {e}")
+            raise
             
     def insert_project_value(self, name: str, budget: str, company: int, employer: int, engineer: int, architect: int, is_done: str):
         '''
@@ -65,6 +66,7 @@ class Project():
             return self.cursor.lastrowid
         except Exception as e:
             print(f"Could not insert values into project,")
+            raise
             
     def update_project_value(self, project_id: int=None, name: str=None, budget: str=None, company: int=None, employer: int=None, engineer: int=None, architect: int=None, is_done: str=None):
         '''
@@ -116,6 +118,7 @@ class Project():
             print(f"Successfully updated Engineer ID: {project_id}")
         except Exception as e:
             print(f"Could not update Project table, occured as {e}")
+            raise
     
     def delete_id(self, project_id: int):
         '''
@@ -128,4 +131,5 @@ class Project():
             self.db.commit()
         except Exception as e:
             print(f"Could not delete project row, occured as {e}")
+            raise
         

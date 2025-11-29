@@ -32,6 +32,7 @@ class Company():
             self.db.commit()
         except Exception as e:
             print(f"Failure in creating an Engineering table, resulted as {e}")
+            raise
             
     def insert_company_value(self, name: str, phone_num: str, email: str, address: str, date: str):
         '''
@@ -56,6 +57,7 @@ class Company():
             return self.cursor.lastrowid
         except Exception as e:
             print(f"Failure in inserting values inside of the company table, problem occured as {e}")
+            raise
             
     def update_company_value(self, company_id: int, name: str=None, phone_num: str=None, email: str=None, address: str=None, date: str=None):
         '''
@@ -101,11 +103,16 @@ class Company():
             print(f"Successfully updated Engineer ID: {company_id}")
         except Exception as e:
             print(f"Could not update company table, problem appeared as {e}")
+            raise
             
     def delete_id(self, company_id: int):
         '''
         This function aims to remove a company row based on the id
         '''
-        self.cursor.execute(
-            "DELETE FROM Company WHERE Company_ID = ?", (company_id,) 
-        )
+        try:
+            self.cursor.execute(
+                "DELETE FROM Company WHERE Company_ID = ?", (company_id,) 
+            )
+        except Exception as e:
+            print(f"Could not delete Company row, occured as {e}")
+            raise

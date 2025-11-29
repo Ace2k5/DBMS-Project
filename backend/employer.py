@@ -31,6 +31,7 @@ class Employer():
             self.db.commit()
         except Exception as e:
             print(f"Failed to create employer table, problem occured as {e}")
+            raise
     
     def insert_employer_value(self, name: str, email: str, phone: str, hiring_date: str):
         '''
@@ -54,6 +55,7 @@ class Employer():
             return self.cursor.lastrowid
         except Exception as e:
             print(f"An error occured when inserting values into Employer table, problem appeared as {e}")
+            raise
             
     def update_employer_value(self, employer_id: int, name: str=None, email: str=None, phone: str=None, hiring_date: str=None):
         '''
@@ -89,12 +91,13 @@ class Employer():
             
             params.append(employer_id)
             
-            query = f"UPDATE Company SET {', '.join(updates)} WHERE Employer_ID = ?"
+            query = f"UPDATE Employer SET {', '.join(updates)} WHERE Employer_ID = ?"
             self.cursor.execute(query, params)
             self.db.commit()
             print(f"Successfully updated Engineer ID: {employer_id}")
         except Exception as e:
             print(f"Could not update company table, problem appeared as {e}")
+            raise
         
         
     def delete_id(self, employer_id: int):
@@ -103,6 +106,11 @@ class Employer():
             Args:
                 employer_id = int, id of the employer that the user wants to remove
         '''
-        self.cursor.execute(
-            "DELETE FROM Employer WHERE Employer_ID = ?", (employer_id,) 
-        )
+        try:
+            self.cursor.execute(
+                "DELETE FROM Employer WHERE Employer_ID = ?", (employer_id,) 
+            )
+            self.db.commit()
+        except Exception as e:
+            print(f"Could not delete employer row, occured as {e}")
+            raise

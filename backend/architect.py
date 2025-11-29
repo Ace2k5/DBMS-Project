@@ -31,6 +31,7 @@ class Architect():
             self.db.commit()
         except Exception as e:
             print(f"Failure in creating an architect table, resulted as {e}")
+            raise
             
     def insert_architect_value(self, name: str, phone: str, email: str, hire_date: str):
         '''
@@ -56,6 +57,7 @@ class Architect():
             
         except Exception as e:
             print(f"Failed to insert values inside of the architect table, problem appeared as {e}")
+            raise
             
     def update_architect_value(self, architect_id: int, name: str=None, phone: str=None, email: str=None, hire_date: str=None):
         '''
@@ -90,18 +92,23 @@ class Architect():
             
             params.append(architect_id)
             
-            query = f"UPDATE Architect SET {', '.join(updates)} WHERE Achitect_ID = ?"
+            query = f"UPDATE Architect SET {', '.join(updates)} WHERE Architect_ID = ?"
             self.cursor.execute(query, params)
             self.db.commit()
             print(f"Successfully updated architect ID: {architect_id}")
             
         except Exception as e:
             print(f"There was a problem in updating the architect table, problem resulted as {e}")
+            raise
     
     def delete_id(self, architect_id: int):
         '''
         This function aims to remove an architect row based on the id
         '''
-        self.cursor.execute(
-            "DELETE FROM Architect WHERE Architect_ID = ?", (architect_id,) 
-        )
+        try:
+            self.cursor.execute(
+                "DELETE FROM Architect WHERE Architect_ID = ?", (architect_id,) 
+            )
+        except Exception as e:
+            print(f"Could not delete architect row, occured as {e}")
+            raise
