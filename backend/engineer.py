@@ -1,9 +1,9 @@
-'''
 
-The purpose of this file is to input the engineer that was assigned to the project.
+"""
+Engineer table management for the database system.
 
-'''
-
+This module handles all CRUD operations for the Engineer table.
+"""
 import sqlite3
 
 class Engineer():
@@ -12,10 +12,15 @@ class Engineer():
         self.cursor = self.db.cursor()
         
     def create_table_engineer(self):
-        '''
-        This functions aims to create the engineering table. This table will function as a foreign key for the Projects table
-        To clarify hiring date, it is how long the engineer has been in OUR company.
-        '''
+        """
+        Create the Engineer table if it doesn't exist.
+        
+        The table includes fields for engineer identification, contact info,
+        and hiring date tracking.
+        
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 """
@@ -35,17 +40,19 @@ class Engineer():
             raise
             
     def insert_engineer_value(self, name: str, field: str, phone: str, email: str, hire_date: str):
-        '''
-        This function will aim to insert values inside of the Engineering table while grabbing the last row inserted inside of the
-        table.
+        """
+        Insert a new engineer record into the database.
         
-            Args:
-                name = str, name of the company
-                field = str, field of engineering
-                phone = str, the phone number of the engineer
-                email = str, the email of the engineer
-                hire_date = str, when the engineer was hired into the company
-        '''
+        Args:
+            name: Full name of the engineer
+            field: Engineering specialization (e.g., "Civil", "Mechanical")
+            phone: Contact phone number
+            email: Contact email address
+            hire_date: Date hired in YYYY-MM-DD format
+            
+        Returns:
+            int: The auto-generated Engineer_ID of the new record, or None if failed
+        """
         try:
             self.cursor.execute(
                 """
@@ -62,16 +69,20 @@ class Engineer():
             raise
             
     def update_engineer_value(self, engineer_id: int, name: str=None, field: str=None, phone: str=None, email: str=None, hire_date: str=None):
-        '''
-        This function will update values based on how many parameters are given.
-            Args:
-                engineer_id = int, the id of the engineer
-                name = str, the name of the engineer
-                field = str, what field the engineer studied
-                phone = str, phone number of the engineer
-                email = str, email of the engineer
-                hire_date = str, when the engineer was hired to the company
-        '''
+        """
+        Update an engineer's information. Only provided fields are updated.
+        
+        Args:
+            engineer_id: ID of the engineer to update
+            name: New name (optional)
+            field: New engineering field (optional)
+            phone: New phone number (optional)
+            email: New email address (optional)
+            hire_date: New hiring date (optional)
+            
+        Returns:
+            None
+        """
         try:
             updates = []
             params = []
@@ -108,9 +119,15 @@ class Engineer():
             raise
     
     def delete_id(self, engineer_id: int):
-        '''
-        This function aims to remove an engineer row based on the id
-        '''
+        """
+        Remove an engineer record from the database.
+        
+        Args:
+            engineer_id: ID of the engineer to delete
+            
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 "DELETE FROM Engineer WHERE Engineer_ID = ?", (engineer_id,) 

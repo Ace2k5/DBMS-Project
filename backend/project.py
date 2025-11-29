@@ -1,8 +1,9 @@
-'''
+"""
+Project table management for the database system.
 
-The purpose of this file is to create the project using engineer, architect, company and employer as foreign keys.
-
-'''
+This module handles all CRUD operations for the Project table,
+which links together Engineer, Architect, Company, and Employer tables.
+"""
 
 import sqlite3
 from architect import Architect
@@ -16,9 +17,15 @@ class Project():
         self.cursor = self.db.cursor()
         
     def create_project_table(self):
-        '''
-        This aims to create an project table.
-        '''
+        """
+        Create the Project table if it doesn't exist.
+        
+        The table uses foreign keys to reference Company, Employer, Engineer,
+        and Architect tables, establishing relationships between entities.
+        
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 """
@@ -44,17 +51,21 @@ class Project():
             raise
             
     def insert_project_value(self, name: str, budget: str, company: int, employer: int, engineer: int, architect: int, is_done: str):
-        '''
-        This aims to insert values inside of the project table
-            Args:
-                name: str, name of the project
-                budget: str, money needed for the project
-                company: int, foreign key from company.py
-                employer: int, foreign key from employer.py
-                engineer: int, foreign key from engineer.py
-                architect: int, foreign key from architect.py
-                is_done: str, checker if the project is done or not
-        '''
+        """
+        Insert a new project record into the database.
+        
+        Args:
+            name: Name of the project
+            budget: Project budget amount
+            company: Foreign key reference to Company_ID
+            employer: Foreign key reference to Employer_ID
+            engineer: Foreign key reference to Engineer_ID
+            architect: Foreign key reference to Architect_ID
+            is_done: Project completion status (e.g., "Yes", "No", "In Progress")
+            
+        Returns:
+            int: The auto-generated Project_ID of the new record, or None if failed
+        """
         try:
             self.cursor.execute(
                 """
@@ -69,17 +80,22 @@ class Project():
             raise
             
     def update_project_value(self, project_id: int=None, name: str=None, budget: str=None, company: int=None, employer: int=None, engineer: int=None, architect: int=None, is_done: str=None):
-        '''
-        This aims to update a specific project_id.
-            Args:
-                name: str, name of the project
-                budget: str, money needed for the project
-                company: int, foreign key from company.py
-                employer: int, foreign key from employer.py
-                engineer: int, foreign key from engineer.py
-                architect: int, foreign key from architect.py
-                is_done: str, checker if the project is done or not
-        '''
+        """
+        Update a project's information. Only provided fields are updated.
+        
+        Args:
+            project_id: ID of the project to update
+            name: New project name (optional)
+            budget: New budget amount (optional)
+            company: New Company_ID foreign key (optional)
+            employer: New Employer_ID foreign key (optional)
+            engineer: New Engineer_ID foreign key (optional)
+            architect: New Architect_ID foreign key (optional)
+            is_done: New completion status (optional)
+            
+        Returns:
+            None
+        """
         try:
             updates = []
             params = []

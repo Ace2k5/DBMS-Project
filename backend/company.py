@@ -1,8 +1,8 @@
-'''
+"""
+Company table management for the database system.
 
-The purpose of this file is to input the company that requested the project.
-
-'''
+This module handles all CRUD operations for the Company table.
+"""
 
 import sqlite3
 
@@ -12,10 +12,16 @@ class Company():
         self.cursor = self.db.cursor()
         
     def create_table_company(self):
-        '''
-        This functions aims to create the company table. This table will function as a foreign key for the Projects table
+        """
+        Create the Company table if it doesn't exist.
         
-        '''
+        The table includes fields for company identification, contact info,
+        address, and request date tracking.
+        
+        Returns:
+            None
+        """
+
         try:
             self.cursor.execute(
                 """
@@ -35,17 +41,19 @@ class Company():
             raise
             
     def insert_company_value(self, name: str, phone_num: str, email: str, address: str, date: str):
-        '''
-        This function will aim to insert values inside of the Company table while grabbing the last row inserted inside of the
-        table.
-            Args:
-                company_id = int, the id of the company
-                name = str, name of the company
-                phone_num = str, phone number of the company
-                email = str, email of the company
-                address = str, where the company is located
-                date = str, when the company requested for the project
-        '''
+        """
+        Insert a new company record into the database.
+        
+        Args:
+            name: Name of the company
+            phone_num: Contact phone number
+            email: Contact email address
+            address: Physical address of the company
+            date: Date the company requested the project in YYYY-MM-DD format
+            
+        Returns:
+            int: The auto-generated Company_ID of the new record, or None if failed
+        """
         try:
             self.cursor.execute(
                 """
@@ -60,17 +68,20 @@ class Company():
             raise
             
     def update_company_value(self, company_id: int, name: str=None, phone_num: str=None, email: str=None, address: str=None, date: str=None):
-        '''
-        This function will update values based on how many parameters are given.
-
-            Args:
-                company_id = int, the id of the company
-                name = str, name of the company
-                phone_num = str, phone number of the company
-                email = str, email of the company
-                address = str, where the company is located
-                date = str, when the company requested for the project
-        '''
+        """
+        Update a company's information. Only provided fields are updated.
+        
+        Args:
+            company_id: ID of the company to update
+            name: New company name (optional)
+            phone_num: New phone number (optional)
+            email: New email address (optional)
+            address: New physical address (optional)
+            date: New request date (optional)
+            
+        Returns:
+            None
+        """
         try:
             updates = []
             params = []

@@ -1,8 +1,9 @@
-'''
+"""
+Architect table management for the database system.
 
-The purpose of this file is to input the architect that was assigned to the project.
+This module handles all CRUD operations for the Architect table.
+"""
 
-'''
 
 import sqlite3
 
@@ -12,10 +13,15 @@ class Architect():
         self.cursor = self.db.cursor()
         
     def create_table_architect(self):
-        '''
-        This functions aims to create the architect table. This table will function as a foreign key for the Projects table
-        To clarify hiring date, it is how long the architect has been in OUR company.
-        '''
+        """
+        Create the Architect table if it doesn't exist.
+        
+        The table includes fields for architect identification, contact info,
+        and hiring date tracking.
+        
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 """
@@ -34,16 +40,18 @@ class Architect():
             raise
             
     def insert_architect_value(self, name: str, phone: str, email: str, hire_date: str):
-        '''
-        This function will aim to insert values inside of the architect table while grabbing the last row inserted inside of the
-        table.
+        """
+        Insert a new architect record into the database.
         
-            Args:
-                name = str, name of the company
-                phone = str, the phone number of the architect
-                email = str, the email of the architect
-                hire_date = str, when the architect was hired into the company
-        '''
+        Args:
+            name: Full name of the architect
+            phone: Contact phone number
+            email: Contact email address
+            hire_date: Date hired in YYYY-MM-DD format
+            
+        Returns:
+            int: The auto-generated Architect_ID of the new record, or None if failed
+        """
         try:
             self.cursor.execute(
                 """
@@ -60,15 +68,19 @@ class Architect():
             raise
             
     def update_architect_value(self, architect_id: int, name: str=None, phone: str=None, email: str=None, hire_date: str=None):
-        '''
-        This function will update values based on how many parameters are given.
-            Args:
-                architect_id = int, the id of the architect
-                name = str, the name of the architect
-                phone = str, phone number of the architect
-                email = str, email of the architect
-                hire_date = str, when the architect was hired to the company
-        '''
+        """
+        Update an architect's information. Only provided fields are updated.
+        
+        Args:
+            architect_id: ID of the architect to update
+            name: New name (optional)
+            phone: New phone number (optional)
+            email: New email address (optional)
+            hire_date: New hiring date (optional)
+            
+        Returns:
+            None
+        """
         try:
             updates = []
             params = []

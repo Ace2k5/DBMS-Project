@@ -1,8 +1,9 @@
-'''
 
-The purpose of this file is to input the employer that handled the company request.
+"""
+Employer table management for the database system.
 
-'''
+This module handles all CRUD operations for the Employer table.
+"""
 
 import sqlite3
 
@@ -12,10 +13,15 @@ class Employer():
         self.cursor = self.db.cursor()
         
     def create_employer_table(self):
-        '''
-        This functions aims to create the employer table. This table will function as a foreign key for the Projects table
-        To clarify hiring date, it is how long the employer has been in OUR company.
-        '''
+        """
+        Create the Employer table if it doesn't exist.
+        
+        The table includes fields for employer identification, contact info,
+        and hiring date tracking.
+        
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 """
@@ -31,19 +37,21 @@ class Employer():
             self.db.commit()
         except Exception as e:
             print(f"Failed to create employer table, problem occured as {e}")
-            raise
+            
     
     def insert_employer_value(self, name: str, email: str, phone: str, hiring_date: str):
-        '''
-        This function will aim to insert values inside of the Engineering table while grabbing the last row inserted inside of the
-        table.
+        """
+        Insert a new employer record into the database.
         
-            Args:
-                name = str, name of the employer
-                email = str, the email of the employer
-                phone = str, the phone number of the employer
-                hire_date = str, when the employer was hired into the company
-        '''
+        Args:
+            name: Full name of the employer
+            email: Contact email address
+            phone: Contact phone number
+            hiring_date: Date hired in YYYY-MM-DD format
+            
+        Returns:
+            int: The auto-generated Employer_ID of the new record, or None if failed
+        """
         try:
             self.cursor.execute(
                 """
@@ -58,15 +66,19 @@ class Employer():
             raise
             
     def update_employer_value(self, employer_id: int, name: str=None, email: str=None, phone: str=None, hiring_date: str=None):
-        '''
-        This function will aim to update values inside of the Employer table.
+        """
+        Update an employer's information. Only provided fields are updated.
         
-            Args:
-                name = str, name of the employer
-                email = str, the email of the employer
-                phone = str, the phone number of the employer
-                hire_date = str, when the employer was hired into the company
-        '''
+        Args:
+            employer_id: ID of the employer to update
+            name: New name (optional)
+            email: New email address (optional)
+            phone: New phone number (optional)
+            hiring_date: New hiring date (optional)
+            
+        Returns:
+            None
+        """
         try:
             updates = []
             params = []
@@ -101,11 +113,15 @@ class Employer():
         
         
     def delete_id(self, employer_id: int):
-        '''
-        This function aims to remove an employer row based on the id
-            Args:
-                employer_id = int, id of the employer that the user wants to remove
-        '''
+        """
+        Remove an employer record from the database.
+        
+        Args:
+            employer_id: ID of the employer to delete
+            
+        Returns:
+            None
+        """
         try:
             self.cursor.execute(
                 "DELETE FROM Employer WHERE Employer_ID = ?", (employer_id,) 
