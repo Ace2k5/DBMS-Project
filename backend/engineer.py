@@ -109,5 +109,5 @@ class Engineer():
         This function aims to remove an engineer row based on the id
         '''
         self.cursor.execute(
-            "DELETE FROM Company WHERE Engineer_ID = ?", (engineer_id,) 
+            "DELETE FROM Engineer WHERE Engineer_ID = ?", (engineer_id,) 
         )

@@ -57,7 +57,7 @@ class Architect():
         except Exception as e:
             print(f"Failed to insert values inside of the architect table, problem appeared as {e}")
             
-    def update_architect_values(self, architect_id: int, name: str=None, phone: str=None, email: str=None, hire_date: str=None):
+    def update_architect_value(self, architect_id: int, name: str=None, phone: str=None, email: str=None, hire_date: str=None):
         '''
         This function will update values based on how many parameters are given.
             Args:
@@ -90,7 +90,7 @@ class Architect():
             
             params.append(architect_id)
             
-            query = f"UPDATE architect SET {', '.join(updates)} WHERE architect_ID = ?"
+            query = f"UPDATE Architect SET {', '.join(updates)} WHERE Achitect_ID = ?"
             self.cursor.execute(query, params)
             self.db.commit()
             print(f"Successfully updated architect ID: {architect_id}")
@@ -103,5 +103,5 @@ class Architect():
         This function aims to remove an architect row based on the id
         '''
         self.cursor.execute(
-            "DELETE FROM Company WHERE architect_ID = ?", (architect_id,) 
+            "DELETE FROM Architect WHERE Architect_ID = ?", (architect_id,) 
         )

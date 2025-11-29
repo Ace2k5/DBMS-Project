@@ -16,6 +16,9 @@ class Project():
         self.cursor = self.db.cursor()
         
     def create_project_table(self):
+        '''
+        This aims to create an project table.
+        '''
         try:
             self.cursor.execute(
                 """
@@ -40,6 +43,17 @@ class Project():
             print(f"Could not create the projects table, occured as {e}")
             
     def insert_project_value(self, name: str, budget: str, company: int, employer: int, engineer: int, architect: int, is_done: str):
+        '''
+        This aims to insert values inside of the project table
+            Args:
+                name: str, name of the project
+                budget: str, money needed for the project
+                company: int, foreign key from company.py
+                employer: int, foreign key from employer.py
+                engineer: int, foreign key from engineer.py
+                architect: int, foreign key from architect.py
+                is_done: str, checker if the project is done or not
+        '''
         try:
             self.cursor.execute(
                 """
@@ -53,7 +67,17 @@ class Project():
             print(f"Could not insert values into project,")
             
     def update_project_value(self, project_id: int=None, name: str=None, budget: str=None, company: int=None, employer: int=None, engineer: int=None, architect: int=None, is_done: str=None):
-        
+        '''
+        This aims to update a specific project_id.
+            Args:
+                name: str, name of the project
+                budget: str, money needed for the project
+                company: int, foreign key from company.py
+                employer: int, foreign key from employer.py
+                engineer: int, foreign key from engineer.py
+                architect: int, foreign key from architect.py
+                is_done: str, checker if the project is done or not
+        '''
         try:
             updates = []
             params = []

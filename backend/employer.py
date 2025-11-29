@@ -79,7 +79,7 @@ class Employer():
                 updates.append("Phone = ?")
                 params.append(phone)
             if hiring_date is not None:
-                updates.append("hiring_date = ?")
+                updates.append("Hiring_Date = ?")
                 params.append(hiring_date)
             
             
@@ -104,5 +104,5 @@ class Employer():
                 employer_id = int, id of the employer that the user wants to remove
         '''
         self.cursor.execute(
-            "DELETE FROM Company WHERE Employer_ID = ?", (employer_id,) 
+            "DELETE FROM Employer WHERE Employer_ID = ?", (employer_id,) 
         )
