@@ -1,7 +1,7 @@
 import sqlite3
 
 class Engineer():
-    def __init__(self, db = sqlite3.Connection):
+    def __init__(self, db: sqlite3.Connection):
         self.db = db
         self.cursor = self.db.cursor()
         
