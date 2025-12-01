@@ -6,11 +6,6 @@ which links together Engineer, Architect, Company, and Employer tables.
 """
 
 import sqlite3
-from architect import Architect
-from company import Company
-from engineer import Engineer
-from employer import Employer
-
 class Project():
     def __init__(self, db: sqlite3.Connection):
         self.db = db

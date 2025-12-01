@@ -1,3 +1,9 @@
+"""
+SQL commands.
+
+This module handles all of the SQL table retrievals
+"""
+
 import sqlite3
 class SQLDatabaseCommands():
     def __init__(self, db: sqlite3.Connection):
@@ -13,13 +19,12 @@ class SQLDatabaseCommands():
                 Engineer table
             """
             try:
-                data = self.cursor.execute(
+                self.cursor.execute(
                     """
                     SELECT * FROM Engineer
                     """
                 )
-                data.fetchall()
-                return data
+                return self.cursor.fetchall()
             except Exception as e:
                 print(f"Failed in getting the values from Engineer table, occured as {e}")
     #####
@@ -34,13 +39,12 @@ class SQLDatabaseCommands():
             
         """
         try:
-            data = self.cursor.execute(
+            self.cursor.execute(
                 """
                 SELECT * FROM Company
                 """
             )
-            data.fetchall()
-            return data
+            return self.cursor.fetchall()
         except Exception as e:
             print(f"Failed in getting the values from Company table, occured as {e}")
     ####
@@ -55,13 +59,12 @@ class SQLDatabaseCommands():
             
         """
         try:
-            data = self.cursor.execute(
+            self.cursor.execute(
                 """
                 SELECT * FROM Employer
                 """
             )
-            data.fetchall()
-            return data
+            return self.cursor.fetchall()
         except Exception as e:
             print(f"Failed in getting the values from Employer table, occured as {e}")
     ####
@@ -76,13 +79,12 @@ class SQLDatabaseCommands():
             
         """
         try:
-            data = self.cursor.execute(
+            self.cursor.execute(
                 """
                 SELECT * FROM Architect
                 """
             )
-            data.fetchall()
-            return data
+            return self.cursor.fetchall()
         except Exception as e:
             print(f"Failed in getting the values from Architect table, occured as {e}")
     ####
@@ -97,13 +99,12 @@ class SQLDatabaseCommands():
             
         """
         try:
-            data = self.cursor.execute(
+            self.cursor.execute(
                 """
-                SELECT * FROM Architect
+                SELECT * FROM Project
                 """
             )
-            data.fetchall()
-            return data
+            return self.cursor.fetchall()
         except Exception as e:
-            print(f"Failed in getting the values from Architect table, occured as {e}")
+            print(f"Failed in getting the values from Project table, occured as {e}")
     ####
