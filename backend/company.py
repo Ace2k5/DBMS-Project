@@ -27,11 +27,11 @@ class Company():
                 """
                 CREATE TABLE IF NOT EXISTS Company(
                     Company_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Company_Name TEXT,
-                    Phone_Number TEXT,
-                    Email TEXT,
-                    Address TEXT,
-                    Date_of_Request TEXT
+                    Company_Name TEXT NOT NULL,
+                    Phone_Number TEXT NOT NULL,
+                    Email TEXT NOT NULL,
+                    Address TEXT NOT NULL,
+                    Date_of_Request TEXT NOT NULL
                 )
                 """
             )

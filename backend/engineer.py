@@ -26,11 +26,11 @@ class Engineer():
                 """
                 CREATE TABLE IF NOT EXISTS Engineer(
                     Engineer_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Name TEXT,
-                    Engineering_Field TEXT,
-                    Phone_Number TEXT,
-                    Email TEXT,
-                    Hiring_Date TEXT
+                    Name TEXT NOT NULL,
+                    Engineering_Field TEXT NOT NULL,
+                    Phone_Number TEXT NOT NULL,
+                    Email TEXT NOT NULL, 
+                    Hiring_Date TEXT NOT NULL
                 )
                 """
             )

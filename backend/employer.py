@@ -27,10 +27,10 @@ class Employer():
                 """
                 CREATE TABLE IF NOT EXISTS Employer(
                     Employer_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Employer_Name TEXT,
-                    Email TEXT,
-                    Phone TEXT,
-                    Hiring_Date TEXT
+                    Employer_Name TEXT NOT NULL,
+                    Email TEXT NOT NULL,
+                    Phone TEXT NOT NULL,
+                    Hiring_Date TEXT NOT NULL
                 )
                 """
             )

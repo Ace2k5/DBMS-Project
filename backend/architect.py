@@ -27,10 +27,10 @@ class Architect():
                 """
                 CREATE TABLE IF NOT EXISTS Architect(
                     Architect_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Name TEXT,
-                    Phone_Number TEXT,
-                    Email TEXT,
-                    Hiring_Date TEXT
+                    Name TEXT NOT NULL,
+                    Phone_Number TEXT NOT NULL,
+                    Email TEXT NOT NULL,
+                    Hiring_Date TEXT NOT NULL
                 )
                 """
             )

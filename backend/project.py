@@ -31,17 +31,17 @@ class Project():
                 """
                 CREATE TABLE IF NOT EXISTS Project(
                     Project_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Project_Name TEXT,
-                    Budget TEXT,
-                    Company_ID INTEGER,
-                    Employer_ID INTEGER,
-                    Engineer_ID INTEGER,
-                    Architect_ID INTEGER,
+                    Project_Name TEXT NOT NULL,
+                    Budget TEXT NOT NULL,
+                    Company_ID INTEGER NOT NULL,
+                    Employer_ID INTEGER NOT NULL,
+                    Engineer_ID INTEGER NOT NULL,
+                    Architect_ID INTEGER NOT NULL,
                     FOREIGN KEY (Company_ID) REFERENCES Company(Company_ID),
                     FOREIGN KEY (Employer_ID) REFERENCES Employer(Employer_ID),
                     FOREIGN KEY (Engineer_ID) REFERENCES Engineer(Engineer_ID),
                     FOREIGN KEY (Architect_ID) REFERENCES Architect(Architect_ID),
-                    Is_Done TEXT
+                    Is_Done TEXT NOT NULL
                 )
                 """
             )
@@ -76,7 +76,7 @@ class Project():
             self.db.commit()
             return self.cursor.lastrowid
         except Exception as e:
-            print(f"Could not insert values into project,")
+            print(f"Could not insert values into project, {e}")
             raise
             
     def update_project_value(self, project_id: int=None, name: str=None, budget: str=None, company: int=None, employer: int=None, engineer: int=None, architect: int=None, is_done: str=None):
@@ -131,7 +131,7 @@ class Project():
             query = f"UPDATE Project SET {', '.join(updates)} WHERE Project_ID = ?"
             self.cursor.execute(query, params)
             self.db.commit()
-            print(f"Successfully updated Engineer ID: {project_id}")
+            print(f"Successfully updated Project_ID: {project_id}")
         except Exception as e:
             print(f"Could not update Project table, occured as {e}")
             raise
