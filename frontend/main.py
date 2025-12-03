@@ -4,7 +4,7 @@ from . import account_window
 
 def main():
     app = QApplication(sys.argv)
-    window = account_window.MainWindow()
+    window = account_window.Window()
     window.show()
     sys.exit(app.exec_())
 

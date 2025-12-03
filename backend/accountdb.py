@@ -62,4 +62,18 @@ class saves():
 
             print(f"Account name {name} created.")
         except Exception as e:
-            print(f"There was something wrong on save_account(): {e}")    
+            print(f"There was something wrong on save_account(): {e}")
+
+    def login_account(self, name, password):
+        try:
+            lower_name = name.lower()
+            account_path = self.save_path / f"{lower_name}.json"
+            with open(account_path, "r") as f:
+                data = json.load(f)
+
+            if lower_name in data:
+                if password == data[lower_name]["password"]:
+                    print(f"Successfully logged in as {name}")
+                    return True
+        except Exception as e:
+            print(f"Failed to login to account, occured as {e}")

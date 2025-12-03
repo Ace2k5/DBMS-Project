@@ -2,9 +2,7 @@ from PyQt5.QtCore import (Qt, QTimer)
 from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
                              QPushButton, QSizePolicy, QVBoxLayout, QHBoxLayout)
 from pathlib import Path
-from . import utils_frontend as utils
-from . import configs_frontend as configs
-from . import qt_painter
+from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs
 
 class AccountWindow(QMainWindow):
     def __init__(self):
@@ -12,6 +10,8 @@ class AccountWindow(QMainWindow):
         self.setupCentralWidget()
         self.setupMainWindow()
         self.setupQtWidgets()
+
+        account_funcs.AccountFunctionality(self.username, self.password, self.login, self.sign_up)
 
     def background(self):
         base_path = configs.IMG_DIR
@@ -110,8 +110,3 @@ class AccountWindow(QMainWindow):
         self.main_layout.addWidget(self.password, 0 ,alignment=Qt.AlignCenter)
         self.main_layout.addLayout(self.hbox)
         self.main_layout.addStretch()
-
-        self.saved_buttons.append(self.username)
-        self.saved_buttons.append(self.password)
-        self.saved_buttons.append(self.login)
-        self.saved_buttons.append(self.sign_up)
