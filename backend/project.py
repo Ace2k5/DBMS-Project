@@ -6,10 +6,10 @@ which links together Engineer, Architect, Company, and Employer tables.
 """
 
 import sqlite3
-class Project():
+from .db_table import BaseTable
+class Project(BaseTable):
     def __init__(self, db: sqlite3.Connection):
-        self.db = db
-        self.cursor = self.db.cursor()
+        super().__init__(db, table_name="Project", pk="Project_ID")
         
     def create_project_table(self):
         """
@@ -44,103 +44,3 @@ class Project():
         except Exception as e:
             print(f"Could not create the projects table, occured as {e}")
             raise
-            
-    def insert_project_value(self, name: str, budget: str, company: int, employer: int, engineer: int, architect: int, is_done: str):
-        """
-        Insert a new project record into the database.
-        
-        Args:
-            name: Name of the project
-            budget: Project budget amount
-            company: Foreign key reference to Company_ID
-            employer: Foreign key reference to Employer_ID
-            engineer: Foreign key reference to Engineer_ID
-            architect: Foreign key reference to Architect_ID
-            is_done: Project completion status (e.g., "Yes", "No", "In Progress")
-            
-        Returns:
-            int: The auto-generated Project_ID of the new record, or None if failed
-        """
-        try:
-            self.cursor.execute(
-                """
-                INSERT INTO Project(Project_Name, Budget, Company_ID, Employer_ID, Engineer_ID, Architect_ID, Is_Done) VALUES (?, ?, ?, ?, ?, ?, ?)
-                """,
-                (name, budget, company, employer, engineer, architect, is_done)
-            )
-            self.db.commit()
-            return self.cursor.lastrowid
-        except Exception as e:
-            print(f"Could not insert values into project, {e}")
-            raise
-            
-    def update_project_value(self, project_id: int=None, name: str=None, budget: str=None, company: int=None, employer: int=None, engineer: int=None, architect: int=None, is_done: str=None):
-        """
-        Update a project's information. Only provided fields are updated.
-        
-        Args:
-            project_id: ID of the project to update
-            name: New project name (optional)
-            budget: New budget amount (optional)
-            company: New Company_ID foreign key (optional)
-            employer: New Employer_ID foreign key (optional)
-            engineer: New Engineer_ID foreign key (optional)
-            architect: New Architect_ID foreign key (optional)
-            is_done: New completion status (optional)
-            
-        Returns:
-            None
-        """
-        try:
-            updates = []
-            params = []
-            
-            if name is not None:
-                updates.append("Project_Name = ?")
-                params.append(name)
-            if budget is not None:
-                updates.append("Budget = ?")
-                params.append(budget)
-            if company is not None:
-                updates.append("Company_ID = ?")
-                params.append(company)
-            if employer is not None:
-                updates.append("Employer_ID = ?")
-                params.append(employer)
-            if engineer is not None:
-                updates.append("Engineer_ID = ?")
-                params.append(engineer)
-            if architect is not None:
-                updates.append("Architect_ID = ?")
-                params.append(architect)
-            if is_done is not None:
-                updates.append("Is_Done = ?")
-                params.append(is_done)
-            
-            if not updates:
-                print("There was nothing to update, no given parameters. Returning...")
-                return
-            
-            params.append(project_id)
-            
-            query = f"UPDATE Project SET {', '.join(updates)} WHERE Project_ID = ?"
-            self.cursor.execute(query, params)
-            self.db.commit()
-            print(f"Successfully updated Project_ID: {project_id}")
-        except Exception as e:
-            print(f"Could not update Project table, occured as {e}")
-            raise
-    
-    def delete_id(self, project_id: int):
-        '''
-        This function aims to remove an engineer row based on the id
-        '''
-        try:
-            self.cursor.execute(
-                "DELETE FROM Project WHERE Project_ID = ?", (project_id,) 
-            )
-            self.db.commit()
-        except Exception as e:
-            print(f"Could not delete project row, occured as {e}")
-            raise
-        

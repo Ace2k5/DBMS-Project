@@ -61,8 +61,11 @@ class saves():
                 json.dump(account, f)
 
             print(f"Account name {name} created.")
+            return True
         except Exception as e:
             print(f"There was something wrong on save_account(): {e}")
+            return False
+        
 
     def login_account(self, name, password):
         try:
@@ -77,3 +80,4 @@ class saves():
                     return True
         except Exception as e:
             print(f"Failed to login to account, occured as {e}")
+            return False

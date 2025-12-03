@@ -1,8 +1,8 @@
-from PyQt5.QtCore import (Qt, QTimer)
+from PyQt5.QtCore import (Qt, QTimer, pyqtSignal)
 from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
                              QPushButton, QSizePolicy, QVBoxLayout, QHBoxLayout)
 from pathlib import Path
-from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs
+from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs, project_management
 
 class AccountWindow(QMainWindow):
     def __init__(self):
@@ -11,7 +11,24 @@ class AccountWindow(QMainWindow):
         self.setupMainWindow()
         self.setupQtWidgets()
 
-        account_funcs.AccountFunctionality(self.username, self.password, self.login, self.sign_up)
+        self.account_funcs = account_funcs.AccountFunctionality(
+            self.username, 
+            self.password, 
+            self.login, 
+            self.sign_up)
+        self.project_management = project_management.ProjectWindow()
+
+        self.account_funcs.signup_success.connect(self.handle_sign_in)
+        self.account_funcs.login_success.connect(self.handle_log_in)
+
+
+    def handle_sign_in(self):
+        self.close()
+        self.project_management.show()
+
+    def handle_log_in(self):
+        self.close()
+        self.project_management.show()
 
     def background(self):
         base_path = configs.IMG_DIR
