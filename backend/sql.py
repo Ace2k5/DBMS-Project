@@ -13,7 +13,7 @@ from company import Company
 from employer import Employer
 from accountdb import saves
 from pathlib import Path
-from . import configs_backend
+from . import configs_backend as configs
 
 class SQLDatabaseManager():        
     def __init__(self):
@@ -37,8 +37,7 @@ class SQLDatabaseManager():
 
     def access_user(self, name):
         lower_name = name.lower()
-        base_path = Path(__file__).resolve().parent.parent
-        self.save_path = base_path / "accounts_save"
+        self.save_path = configs.ACCOUNT_SAVE
 
         self.load_user = self.save_path / f"{lower_name}.json"
 

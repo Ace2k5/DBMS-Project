@@ -3,11 +3,12 @@ This file is where the creation and deletion of accounts are.
 
 """
 from pathlib import Path
+from . import configs_backend as configs
 import json
 
 class saves():
     def __init__(self):
-        self.save_path = Path("../account_saves")
+        self.save_path = configs.ACCOUNT_SAVE
         self.main()
         # button.clicked.connect(self.save_account) future reference.
 
@@ -41,13 +42,19 @@ class saves():
         # if create account button is clicked (in the future) this will run)
         # 
         try:
-            account_path = self.save_path / f"{name.lower()}.json"
+            lower_name = name.lower()
+            account_path = self.save_path / f"{lower_name}.json"
             if account_path.exists():
                 print(f"Account {name} has already been created.")
                 return
             
+            name_db = f"{lower_name}.db"
+
             account = {
-                name: password
+                lower_name: {
+                    "password": password,
+                    "db": name_db
+                }
             }
 
             with open(account_path, "w") as f:

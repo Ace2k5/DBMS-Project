@@ -6,11 +6,11 @@ This module handles all CRUD operations for the Architect table.
 
 
 import sqlite3
+from .db_table import BaseTable
 
-class Architect():
+class Architect(BaseTable):
     def __init__(self, db: sqlite3.Connection):
-        self.db = db
-        self.cursor = self.db.cursor()
+        super().__init__(db, table_name="Architect", pk="Architect_ID")
         
     def create_table_architect(self):
         """

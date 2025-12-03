@@ -1,10 +1,10 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from . import main_window
+from . import account_window
 
 def main():
     app = QApplication(sys.argv)
-    window = main_window.MainWindow()
+    window = account_window.MainWindow()
     window.show()
     sys.exit(app.exec_())
 

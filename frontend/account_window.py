@@ -6,7 +6,7 @@ from . import utils_frontend as utils
 from . import configs_frontend as configs
 from . import qt_painter
 
-class MainWindow(QMainWindow):
+class AccountWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupCentralWidget()
@@ -14,8 +14,8 @@ class MainWindow(QMainWindow):
         self.setupQtWidgets()
 
     def background(self):
-        base_path = Path(__file__).resolve().parent
-        building_bg = base_path.parent / "imgs" / "buildings_bg.jpg"
+        base_path = configs.IMG_DIR
+        building_bg = base_path / "buildings_bg.jpg"
         print(f"Looking for image at: {building_bg}")
         return str(building_bg)
 
@@ -32,21 +32,23 @@ class MainWindow(QMainWindow):
 
     def setupQtWidgets(self):
 
+        self.saved_buttons = []
+
         self.main_layout.addStretch()
 
-        name = QLabel()
-        name.setText(configs.pyqt["application_name"])
-        name.setStyleSheet("""font-size: 32px;
+        self.name = QLabel()
+        self.name.setText(configs.pyqt["application_name"])
+        self.name.setStyleSheet("""font-size: 32px;
                            font-family: Times New Roman;
                             font-weight: bold;
                             color: white;
                             padding: 10px;
                             background-color: rgba(0, 0, 0, 50);
                            """)
-        name.setAlignment(Qt.AlignCenter)
+        self.name.setAlignment(Qt.AlignCenter)
         
-        username = QLineEdit()
-        username.setStyleSheet("""
+        self.username = QLineEdit()
+        self.username.setStyleSheet("""
                             font-size: 16px;
                             font-family: Times New Roman;
                             font-weight: bold;
@@ -56,10 +58,10 @@ class MainWindow(QMainWindow):
                             border-radius: 5px;
                             background-color: rgba(0, 0, 0, 50);
                             """)
-        username.setFixedWidth(200)
+        self.username.setFixedWidth(200)
 
-        password = QLineEdit()
-        password.setStyleSheet("""
+        self.password = QLineEdit()
+        self.password.setStyleSheet("""
                             font-size: 16px;
                             font-family: Times New Roman;
                             font-weight: bold;
@@ -69,24 +71,11 @@ class MainWindow(QMainWindow):
                             border-radius: 5px;
                             background-color: rgba(0, 0, 0, 50);
                             """)
-        password.setFixedWidth(200)
+        self.password.setFixedWidth(200)
 
-        login = QPushButton()
-        login.setText("Login")
-        login.setStyleSheet("""
-                            font-size: 16px;
-                            font-family: Times New Roman;
-                            font-weight: bold;
-                            color: white;
-                            padding: 1px;
-                            border: 1px solid white;
-                            border-radius: 5px;
-                            background-color: rgba(0, 0, 0, 50);
-                            """)
-        
-        sign_up = QPushButton()
-        sign_up.setText("Sign in")
-        sign_up.setStyleSheet("""
+        self.login = QPushButton()
+        self.login.setText("Login")
+        self.login.setStyleSheet("""
                             font-size: 16px;
                             font-family: Times New Roman;
                             font-weight: bold;
@@ -97,14 +86,32 @@ class MainWindow(QMainWindow):
                             background-color: rgba(0, 0, 0, 50);
                             """)
         
-        hbox = QHBoxLayout()
-        hbox.addStretch()
-        hbox.addWidget(login, 0, alignment=Qt.AlignCenter)
-        hbox.addWidget(sign_up, 0, alignment=Qt.AlignCenter)
-        hbox.addStretch()
+        self.sign_up = QPushButton()
+        self.sign_up.setText("Sign in")
+        self.sign_up.setStyleSheet("""
+                            font-size: 16px;
+                            font-family: Times New Roman;
+                            font-weight: bold;
+                            color: white;
+                            padding: 1px;
+                            border: 1px solid white;
+                            border-radius: 5px;
+                            background-color: rgba(0, 0, 0, 50);
+                            """)
+        
+        self.hbox = QHBoxLayout()
+        self.hbox.addStretch()
+        self.hbox.addWidget(self.login, 0, alignment=Qt.AlignCenter)
+        self.hbox.addWidget(self.sign_up, 0, alignment=Qt.AlignCenter)
+        self.hbox.addStretch()
 
-        self.main_layout.addWidget(name, 0, alignment=Qt.AlignCenter)
-        self.main_layout.addWidget(username, 0, alignment=Qt.AlignCenter)
-        self.main_layout.addWidget(password, 0 ,alignment=Qt.AlignCenter)
-        self.main_layout.addLayout(hbox)
+        self.main_layout.addWidget(self.name, 0, alignment=Qt.AlignCenter)
+        self.main_layout.addWidget(self.username, 0, alignment=Qt.AlignCenter)
+        self.main_layout.addWidget(self.password, 0 ,alignment=Qt.AlignCenter)
+        self.main_layout.addLayout(self.hbox)
         self.main_layout.addStretch()
+
+        self.saved_buttons.append(self.username)
+        self.saved_buttons.append(self.password)
+        self.saved_buttons.append(self.login)
+        self.saved_buttons.append(self.sign_up)

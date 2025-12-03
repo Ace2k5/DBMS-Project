@@ -10,101 +10,16 @@ class SQLDatabaseCommands():
           self.db = db
           self.cursor = self.db.cursor()
 
-    # ENGINEER
-    def show_engineer_table(self):
-            """
-            Retrieve all records from the Engineer table.
-            
-            Returns:
-                Engineer table
-            """
-            try:
-                self.cursor.execute(
-                    """
-                    SELECT * FROM Engineer
-                    """
-                )
-                return self.cursor.fetchall()
-            except Exception as e:
-                print(f"Failed in getting the values from Engineer table, occured as {e}")
-    #####
-
-    # COMPANY
-    def show_company_table(self):
+    def show_table(self, table_name: str):
         """
-        Retrieve all records from the Company table.
+        Retrieve all records from tables
         
         Returns:
-            Returns Company Table
+            Returns table info
             
         """
         try:
-            self.cursor.execute(
-                """
-                SELECT * FROM Company
-                """
-            )
+            self.cursor.execute(f"SELECT * FROM {table_name}")
             return self.cursor.fetchall()
         except Exception as e:
-            print(f"Failed in getting the values from Company table, occured as {e}")
-    ####
-
-    # EMPLOYER
-    def show_employer_table(self):
-        """
-        Retrieve all records from the Employer table.
-        
-        Returns:
-            Returns Employer Table
-            
-        """
-        try:
-            self.cursor.execute(
-                """
-                SELECT * FROM Employer
-                """
-            )
-            return self.cursor.fetchall()
-        except Exception as e:
-            print(f"Failed in getting the values from Employer table, occured as {e}")
-    ####
-    
-    # ARCHITECT
-    def show_architect_table(self):
-        """
-        Retrieve all records from the Architect table.
-        
-        Returns:
-            Returns Architect Table
-            
-        """
-        try:
-            self.cursor.execute(
-                """
-                SELECT * FROM Architect
-                """
-            )
-            return self.cursor.fetchall()
-        except Exception as e:
-            print(f"Failed in getting the values from Architect table, occured as {e}")
-    ####
-    
-    # PROJECT
-    def show_project_table(self):
-        """
-        Retrieve all records from the Project table.
-        
-        Returns:
-            Returns Project Table
-            
-        """
-        try:
-            self.cursor.execute(
-                """
-                SELECT * FROM Project
-                """
-            )
-            return self.cursor.fetchall()
-        except Exception as e:
-            print(f"Failed in getting the values from Project table, occured as {e}")
-    ####
+            print(f"Failed in getting the valeus from the {table_name} table, {e}")
