@@ -6,10 +6,12 @@ from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
 from pathlib import Path
 from . import configs_frontend as configs, utils_frontend as utils, project_management_funcs
 import sqlite3
+from PyQt5.QtGui import QIcon
 
 class ProjectWindow(QMainWindow):
     def __init__(self, db: sqlite3):
         super().__init__()
+        self.setWindowIcon(QIcon(f"{configs.IMG_DIR}/SectIcon.ico"))
         self.db_manager = db # self.save_data / username
         self.setupMainWindow()
         self.setupQt()
@@ -78,14 +80,13 @@ class ProjectWindow(QMainWindow):
 
         #vbox 1
         self.project_assignment_btn = self.generic_btn("Project Assignment")
-        self.project_btn, self.combo_project = self.generic_btn("Project", ["All", "Budget", "Assigned People", "Company"])
+        self.project_btn = self.generic_btn("Project")
         self.company_btn, self.combo_company = self.generic_btn("Company", ["All", "Phone Number", "Email", "Address", "Date of Request"])
         self.person_btn, self.combo_person = self.generic_btn("Hired People", ["All", "Phone Number", "Email", "Role", "Hiring Date"])
 
         self.vbox1.addWidget(self.project_assignment_btn)
 
         self.vbox1.addWidget(self.project_btn)
-        self.vbox1.addWidget(self.combo_project)
         self.vbox1.addSpacing(5)
 
         self.vbox1.addWidget(self.company_btn)

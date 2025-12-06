@@ -4,11 +4,13 @@ from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
 from pathlib import Path
 from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs, project_management_window
 from backend import sql
+from PyQt5.QtGui import QIcon
 
 
 class AccountWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon(f"{configs.IMG_DIR}/SectIcon.ico"))
         self.setupCentralWidget()
         self.setupMainWindow()
         self.setupQtWidgets()

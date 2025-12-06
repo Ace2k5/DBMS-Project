@@ -87,8 +87,9 @@ class ProjectFunctions():
         headers = ["ID", "Name", "Budget"]
         self.mw.table.setColumnCount(len(headers))
         self.mw.table.setHorizontalHeaderLabels(headers)
+        db_column = ["Project_ID", "Project_Name", "Budget"]
 
-        data = self.project_table.select()
+        data = self.project_table.select(*db_column)
         self.fill_table(data)
 
     def fill_table(self, data):
