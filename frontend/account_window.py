@@ -2,7 +2,9 @@ from PyQt5.QtCore import (Qt, QTimer, pyqtSignal)
 from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
                              QPushButton, QSizePolicy, QVBoxLayout, QHBoxLayout)
 from pathlib import Path
-from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs, project_management
+from . import configs_frontend as configs, utils_frontend as utils, qt_painter, account_funcs, project_management_window
+from backend import sql
+
 
 class AccountWindow(QMainWindow):
     def __init__(self):
@@ -16,19 +18,38 @@ class AccountWindow(QMainWindow):
             self.password, 
             self.login, 
             self.sign_up)
-        self.project_management = project_management.ProjectWindow()
+        self.db = sql.SQLDatabaseManager()
 
         self.account_funcs.signup_success.connect(self.handle_sign_in)
         self.account_funcs.login_success.connect(self.handle_log_in)
 
 
     def handle_sign_in(self):
+        username = self.username.text()
         self.close()
-        self.project_management.show()
+
+        success = self.db.create_db(username)
+        if success:
+            self.project_management = project_management_window.ProjectWindow(self.db)
+            print(f"Created database for {username}")
+            self.close()
+            self.project_management.show()
+        else:
+            print(f"Failed to create database for {username}")
+            raise
 
     def handle_log_in(self):
+        username = self.username.text()
         self.close()
-        self.project_management.show()
+        success = self.db.create_db(username)
+        if success:
+            self.project_management = project_management_window.ProjectWindow(self.db)
+            print(f"Successfully connected database {username}.db")
+            self.close()
+            self.project_management.show()
+        else:
+            print(f"Failed to create database for {username}")
+            raise
 
     def background(self):
         base_path = configs.IMG_DIR

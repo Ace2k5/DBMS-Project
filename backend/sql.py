@@ -7,11 +7,11 @@ methods to query various tables.
 
 import sqlite3
 import json
-from engineer import Engineer
-from architect import Architect
-from company import Company
-from employer import Employer
-from accountdb import saves
+from .company import Company
+from .person import Person
+from .project import Project
+from .project_assignment import ProjectAssignment
+from .accountdb import saves
 from pathlib import Path
 from . import configs_backend as configs
 
@@ -27,27 +27,49 @@ class SQLDatabaseManager():
         Initialize the SQL database connection and create table instances.
         """
         user_db = self.access_user(name)
+        if not user_db:
+            print("Failted to get the database path")
+            return False
         self.db = sqlite3.connect(user_db)
         self.cursor = self.db.cursor()
+        self.db.execute("PRAGMA foreign_keys = ON")
 
-        self.engineer_table = Engineer(self.db)
-        self.architect_table = Architect(self.db)
-        self.company_table = Company(self.db)
-        self.employer_table = Employer(self.db)
+        self.company_table = Company(self.db, self.cursor)
+        self.person_table = Person(self.db, self.cursor)
+        self.project = Project(self.db, self.cursor)
+        self.project_assignment = ProjectAssignment(self.db, self.cursor)
 
-    def access_user(self, name):
-        lower_name = name.lower()
-        self.save_path = configs.ACCOUNT_SAVE
+        try:
+            self.company_table.create_table()
+            self.person_table.create_table()
+            self.project.create_table()
+            self.project_assignment.create_table()
+            print("All tables created successfully")
+            return self.db
+        except Exception as e:
+            print(f"Failed to create tables: {e}")
+            return None
 
-        self.load_user = self.save_path / f"{lower_name}.json"
+    def access_user(self, name) -> str | None:
+        try:
+            if name is None:
+                print("No name given.")
+                return None
+            lower_name = name.lower()
+            self.save_path = configs.ACCOUNT_SAVE
+            self.save_path.mkdir(parents=True, exist_ok=True)
 
-        if not self.load_user.exists():
-            print(f"The user {name} does not exist.")
-            return
+            self.load_user = self.save_path / f"{lower_name}.json"
+            if not self.load_user.exists():
+                print(f"The user {name} does not exist. Creating new SQL database file...")
+                file = f"{name}.db"
+                return str(self.save_path/file)
 
-        with open(self.load_user, "r") as f:
-            data = json.load(f)
+            with open(self.load_user, "r") as f:
+                data = json.load(f)
 
-        if lower_name in data:
-            db_file = data[lower_name]["db"]
-            return str(self.save_path / db_file)
+            if lower_name in data:
+                db_file = data[lower_name]["db"]
+                return str(self.save_path / db_file)
+        except Exception as e:
+            print(f"Accessing the user failed, {e}")

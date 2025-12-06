@@ -8,10 +8,10 @@ import sqlite3
 from .db_table import BaseTable
 
 class Company(BaseTable):
-    def __init__(self, db: sqlite3.Connection):
-        super().__init__(db, table_name="Company", pk="Company_ID")
+    def __init__(self, db: sqlite3.Connection, cursor: sqlite3.Cursor):
+        super().__init__(db, cursor, table_name="Company", pk="Company_ID")
         
-    def create_table_company(self):
+    def create_table(self):
         """
         Create the Company table if it doesn't exist.
         

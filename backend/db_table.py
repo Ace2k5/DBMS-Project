@@ -1,12 +1,16 @@
 import sqlite3
 class BaseTable():
-    def __init__(self, db_connection: sqlite3.Connection, table_name: str, pk: str):
+    ALLOWED_COLUMNS = {
+        
+    }
+    def __init__(self, db_connection: sqlite3.Connection, cursor: sqlite3.Cursor, table_name: str, pk: str):
+
         self.db = db_connection
-        self.cursor = self.db.cursor()
+        self.cursor = cursor
         self.table_name = table_name
         self.pk_field = pk
 
-    def updateid(self, entity_id: int, **kwargs):
+    def update_id(self, entity_id: int, **kwargs):
         """
         dynamically updates, placeholder text:
         if given kwargs: key = ? appends, then joins as key = ?, key = ?,
@@ -33,14 +37,14 @@ class BaseTable():
             print(f"Could not update {self.pk_field}, occured as {e}")
         
 
-    def deleteid(self, entity_id: int):
+    def delete_id(self, entity_id: int):
         try:
             self.cursor.execute(f"DELETE FROM {self.table_name} WHERE {self.pk_field} = ?", (entity_id,))
             self.db.commit()
         except Exception as e:
             print(f"Exception occured as {e}")
 
-    def insertvalue(self, **kwargs):
+    def insert_value(self, **kwargs):
         keys = [key for key in kwargs.keys()]
         joined_keys = (", ").join(keys)
 
@@ -54,3 +58,15 @@ class BaseTable():
             self.db.commit()
         except Exception as e:
             print(f"Could not insert value from {self.pk_field}, {e}")
+
+    def select(self, *column):
+        if not column:
+            columns = "*"
+        else:
+            columns = ", ".join(column)
+
+        try:
+            self.cursor.execute(f"SELECT {columns} FROM {self.table_name}")
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(f"Could not show tables from {self.table_name}: {e}")
