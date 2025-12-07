@@ -6,7 +6,8 @@ Contents of each Table:
 
 ERD Diagram:
 
-<img width="549" height="247" alt="image" src="https://github.com/user-attachments/assets/e341140e-3e54-4e16-9cbd-762f8127fa60" />
+<img width="878" height="370" alt="image" src="https://github.com/user-attachments/assets/a942510c-45a1-448c-bdc0-f7510cef72a9" />
+
 
 
 How to run:
