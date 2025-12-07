@@ -2,7 +2,7 @@
 
 Contents of each Table:
 
-<img width="780" height="314" alt="image" src="https://github.com/user-attachments/assets/403acc30-68f8-4ee8-8b35-94067f41475e" />
+<img width="775" height="314" alt="image" src="https://github.com/user-attachments/assets/78ee5695-af94-42bf-8c9b-46cc2a74356d" />
 
 ERD Diagram:
 
