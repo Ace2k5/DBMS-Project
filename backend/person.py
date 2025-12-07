@@ -1,5 +1,5 @@
 import sqlite3
-from .db_table import BaseTable
+from backend.db_table import BaseTable
 
 class Person(BaseTable):
     def __init__(self, db: sqlite3.Connection, cursor: sqlite3.Cursor):

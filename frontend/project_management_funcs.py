@@ -3,11 +3,15 @@ from backend.company import Company
 from backend.person import Person
 from backend.project import Project
 from backend.project_assignment import ProjectAssignment
+from frontend import create_window, update_window, delete_window
 
 class ProjectFunctions():
     def __init__(self, main_window, db_manager):
         self.mw = main_window
         self.manager = db_manager
+        self.create_btn = create_window.CreateWindow(self.manager)
+        self.update_btn = update_window.UpdateWindow(self.manager)
+        self.delete_btn = delete_window.DeleteWindow(self.manager)
 
         # Initialize Backend Tables
         self.company_table = self.manager.company_table
@@ -22,6 +26,33 @@ class ProjectFunctions():
         self.mw.company_btn.clicked.connect(self.display_companies)
         self.mw.person_btn.clicked.connect(self.display_people)
         self.mw.project_btn.clicked.connect(self.display_projects)
+        self.mw.create_btn.clicked.connect(self.create_window)
+        self.mw.update_btn.clicked.connect(self.update_window)
+        self.mw.delete_btn.clicked.connect(self.delete_window)
+
+    def create_window(self):
+        if not self.create_btn.isVisible():
+            self.create_btn.show()
+            self.mw.create_btn.setText("Close Window")
+        else:
+            self.create_btn.hide()
+            self.mw.create_btn.setText("Create")
+
+    def update_window(self):
+        if not self.update_btn.isVisible():
+            self.update_btn.show()
+            self.mw.update_btn.setText("Close Window")
+        else:
+            self.update_btn.hide()
+            self.mw.update_btn.setText("Update")
+
+    def delete_window(self):
+        if not self.delete_btn.isVisible():
+            self.delete_btn.show()
+            self.mw.delete_btn.setText("Close Window")
+        else:
+            self.delete_btn.hide()
+            self.mw.delete_btn.setText("Delete")
 
     def display_assigned_projects(self):
         headers = ["ID", "Company ID", "Project ID", "Person ID", "Status"]

@@ -1,8 +1,10 @@
 import sqlite3
 class BaseTable():
-    ALLOWED_COLUMNS = {
-        
-    }
+    SQL_KEYWORDS = [
+        "SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "ALTER", "CREATE",
+        "UNION", "OR", "AND", "--", "/*", "*/", ";", "'", "\"", "`",
+        "EXEC", "EXECUTE", "TRUNCATE", "MERGE"
+    ]
     def __init__(self, db_connection: sqlite3.Connection, cursor: sqlite3.Cursor, table_name: str, pk: str):
 
         self.db = db_connection
@@ -45,6 +47,10 @@ class BaseTable():
             print(f"Exception occured as {e}")
 
     def insert_value(self, **kwargs):
+        if kwargs.keys() in self.SQL_KEYWORDS:
+            print("SQL keywords are prohibited.")
+            return False # if false then window will close.
+
         keys = [key for key in kwargs.keys()]
         joined_keys = (", ").join(keys)
 

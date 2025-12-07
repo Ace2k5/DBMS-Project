@@ -6,7 +6,7 @@ which links together Engineer, Architect, Company, and Employer tables.
 """
 
 import sqlite3
-from .db_table import BaseTable
+from backend.db_table import BaseTable
 class Project(BaseTable):
     def __init__(self, db: sqlite3.Connection, cursor: sqlite3.Cursor):
         super().__init__(db, cursor, table_name="Project", pk="Project_ID")

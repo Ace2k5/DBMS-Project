@@ -5,7 +5,7 @@ This module handles all CRUD operations for the Company table.
 """
 
 import sqlite3
-from .db_table import BaseTable
+from backend.db_table import BaseTable
 
 class Company(BaseTable):
     def __init__(self, db: sqlite3.Connection, cursor: sqlite3.Cursor):

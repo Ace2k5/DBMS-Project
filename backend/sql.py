@@ -7,13 +7,13 @@ methods to query various tables.
 
 import sqlite3
 import json
-from .company import Company
-from .person import Person
-from .project import Project
-from .project_assignment import ProjectAssignment
-from .accountdb import saves
+from backend.company import Company
+from backend.person import Person
+from backend.project import Project
+from backend.project_assignment import ProjectAssignment
+from backend.accountdb import saves
 from pathlib import Path
-from . import configs_backend as configs
+from backend import configs_backend as configs
 
 class SQLDatabaseManager():        
     def __init__(self):

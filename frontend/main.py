@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from . import account_window
+from frontend import account_window
 
 def main():
     app = QApplication(sys.argv)

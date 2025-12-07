@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QMainWindow, QLabel, QWidget, QLineEdit,
                              QComboBox, QTableWidget, QHeaderView, QTableWidgetItem, QStyleFactory,
                              QListView)
 from pathlib import Path
-from . import configs_frontend as configs, utils_frontend as utils, project_management_funcs
+from frontend import configs_frontend as configs, utils_frontend as utils, project_management_funcs
 import sqlite3
 from PyQt5.QtGui import QIcon
 

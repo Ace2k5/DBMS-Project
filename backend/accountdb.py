@@ -3,7 +3,7 @@ This file is where the creation and deletion of accounts are.
 
 """
 from pathlib import Path
-from . import configs_backend as configs
+from backend import configs_backend as configs
 import json
 
 class saves():
